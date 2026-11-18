@@ -1,0 +1,105 @@
+/* Imported after effects.css. `translate` combines with the existing transform animation. */
+.bg-scene__canvas {
+  translate: var(--parallax-x, 0px) var(--parallax-y, 0px);
+  transition: translate .3s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-scene__canvas { translate: 0 0; transition: none; }
+}
+/* The new scene replaces the older decorative moving glow. */
+body::before { content: none !important; }
+.crt-sweep { display: none !important; }
+
+.home {
+  --console-green: #91ffad;
+  --console-muted: #a0b7a5;
+  position: relative;
+  isolation: isolate;
+  color: #e9f8ec;
+  max-width: 1220px;
+  margin-inline: auto;
+  padding: 24px clamp(18px, 4vw, 48px) 90px;
+}
+.console-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #4b7555;
+  padding-bottom: 18px;
+  color: #93f4a7;
+  font-size: 11px;
+  letter-spacing: .1em;
+}
+.console-top a { color: inherit; }
+.status-dot { display: inline-block; width: 7px; height: 7px; background: #8bffae; border-radius: 50%; margin-right: 6px; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 80px);
+  min-height: min(780px, 90svh);
+  padding-block: 90px;
+}
+.kicker { color: var(--console-green); font-size: 12px; letter-spacing: .16em; }
+.hero-title { font-size: clamp(54px, 8vw, 112px); line-height: 1.06; letter-spacing: -.055em; margin: 26px 0; text-shadow: 0 0 17px #89ffab42; }
+.hero-title span { color: var(--console-green); }
+.hero-subtitle { color: #c3d6c7; font-size: clamp(13px, 1.6vw, 17px); line-height: 1.8; }
+.hero-description { max-width: 55ch; line-height: 1.85; color: #a9c3ad; font-size: 14px; }
+.nav-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 35px; }
+.nav-list a, .nav-list button {
+  display: block;
+  width: 100%;
+  padding: 16px 14px;
+  text-align: left;
+  color: #e3f9e9;
+  background: #07180fc9;
+  border: 1px solid #426b4a;
+  text-decoration: none;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.nav-list a:hover, .nav-list button:hover { color: #9fffbb; border-color: #93ffaf; background: #193722d9; }
+.nav-list a:focus-visible, .nav-list button:focus-visible, .record-trigger:focus-visible, .home a:focus-visible { outline: 2px solid #b7ffd0; outline-offset: 4px; }
+.panels { display: grid; gap: 20px; }
+.console-panel {
+  --aug-border-all: 1px;
+  --aug-border-bg: #537d5e;
+  --aug-tl: 18px;
+  --aug-br: 18px;
+  padding: 22px;
+  background: #07140de6;
+}
+.panel-header { display: flex; gap: 14px; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 18px; border-bottom: 1px solid #42694b; color: #a1fab6; font-size: 11px; letter-spacing: .08em; }
+.panel-label { color: var(--console-green); font-size: 10px; letter-spacing: .1em; }
+.panel-title { font-size: 28px; margin: 10px 0; }
+.panel-copy { color: #b4cdb9; line-height: 1.7; font-size: 13px; }
+.panel-link { color: #a6ffbd; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.record-trigger { width: 100%; text-align: left; background: none; border: 0; color: inherit; font: inherit; padding: 0; cursor: pointer; }
+.signal { width: 100%; height: 46px; display: block; margin: 6px 0; }
+.signal polyline { fill: none; stroke: #79fa9a; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.signal .gridline { stroke: #426b4b; stroke-width: 1; opacity: .6; }
+.info-section { border-top: 1px solid #456b4f; padding-top: 50px; margin-top: 25px; max-width: 810px; }
+.info-section h2 { color: #a0ffb7; font-size: 20px; }
+.info-section p { color: #c4d8c8; line-height: 1.85; }
+.info-section a { color: #b0ffc4; }
+.footer-line { color: #95ae9a; border-top: 1px solid #456b4f; margin-top: 70px; padding-top: 20px; font-size: 11px; }
+@media (max-width: 850px) {
+  .hero-grid { grid-template-columns: 1fr; min-height: 0; gap: 48px; padding-block: 70px 35px; }
+  .panels { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  .hero-grid { padding-block: 50px 25px; }
+  .panels { grid-template-columns: 1fr; }
+  .nav-list { grid-template-columns: 1fr; }
+  .hero-title { overflow-wrap: anywhere; }
+  .console-panel { padding: 18px; }
+  .console-top { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-list a, .nav-list button { transition: none; }
+}

@@ -1,0 +1,89 @@
+<div class="bg-scene" aria-hidden="true">
+  <div class="bg-scene__glow"></div>
+
+  <svg
+    class="bg-scene__canvas"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="tunnel-glow">
+        <stop offset="0%" stop-color="#35ff79" stop-opacity=".23" />
+        <stop offset="60%" stop-color="#18a45b" stop-opacity=".07" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- Vanishing point: (1050, 430) -->
+    <ellipse
+      cx="1050"
+      cy="430"
+      rx="470"
+      ry="360"
+      fill="url(#tunnel-glow)"
+    />
+
+    <!-- Perspective grid -->
+    <g class="bg-scene__grid">
+      <path d="
+        M -300 -200 L 1050 430
+        M 0 -200 L 1050 430
+        M 300 -200 L 1050 430
+        M 600 -200 L 1050 430
+        M 900 -200 L 1050 430
+        M 1200 -200 L 1050 430
+        M 1500 -200 L 1050 430
+        M 1800 -200 L 1050 430
+
+        M -300 1100 L 1050 430
+        M 0 1100 L 1050 430
+        M 300 1100 L 1050 430
+        M 600 1100 L 1050 430
+        M 900 1100 L 1050 430
+        M 1200 1100 L 1050 430
+        M 1500 1100 L 1050 430
+        M 1800 1100 L 1050 430
+
+        M -450 0 L 1050 430
+        M -450 180 L 1050 430
+        M -450 350 L 1050 430
+        M -450 600 L 1050 430
+        M -450 800 L 1050 430
+
+        M 2550 0 L 1050 430
+        M 2550 180 L 1050 430
+        M 2550 350 L 1050 430
+        M 2550 600 L 1050 430
+        M 2550 800 L 1050 430
+      " />
+    </g>
+
+    <!-- Static tunnel structure -->
+    <g class="bg-scene__frames">
+      <rect x="-450" y="-270" width="3000" height="1400" />
+      <rect x="-80" y="-90" width="2260" height="1040" />
+      <rect x="250" y="60" width="1600" height="740" />
+      <rect x="480" y="170" width="1140" height="520" />
+      <rect x="650" y="250" width="800" height="360" />
+      <rect x="790" y="310" width="520" height="240" />
+      <rect x="890" y="355" width="320" height="150" />
+      <rect x="960" y="390" width="180" height="80" />
+    </g>
+
+    <!-- Frames expanding toward the viewer -->
+    <g class="bg-scene__moving-frames">
+      <rect class="depth-frame frame-1"
+        x="650" y="250" width="800" height="360" />
+      <rect class="depth-frame frame-2"
+        x="650" y="250" width="800" height="360" />
+      <rect class="depth-frame frame-3"
+        x="650" y="250" width="800" height="360" />
+      <rect class="depth-frame frame-4"
+        x="650" y="250" width="800" height="360" />
+    </g>
+  </svg>
+
+  <div class="bg-scene__shade"></div>
+  <div class="bg-scene__vignette"></div>
+</div>

@@ -1,0 +1,36 @@
+<!-- Enhances the existing BackgroundScene SVG without changing its animation. -->
+<script>
+  const scene = document.querySelector<HTMLElement>('.bg-scene');
+  const media = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (scene) {
+    let frame = 0;
+    let x = 0;
+    let y = 0;
+
+    const update = () => {
+      scene.style.setProperty('--parallax-x', `${x.toFixed(2)}px`);
+      scene.style.setProperty('--parallax-y', `${y.toFixed(2)}px`);
+      frame = 0;
+    };
+
+    const move = (event: PointerEvent) => {
+      if (!media.matches || reduced.matches) return;
+      x = ((event.clientX / window.innerWidth) - 0.5) * -18;
+      y = ((event.clientY / window.innerHeight) - 0.5) * -12;
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    const reset = () => {
+      x = 0;
+      y = 0;
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('blur', reset);
+    media.addEventListener('change', reset);
+    reduced.addEventListener('change', reset);
+  }
+</script>

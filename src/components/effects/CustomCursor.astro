@@ -1,0 +1,56 @@
+<!-- Decorative only: native cursor remains available everywhere. -->
+<div class="cursor-reticle" aria-hidden="true"><span></span></div>
+
+<style>
+  .cursor-reticle { display: none; }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .cursor-reticle {
+      display: block;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 999;
+      width: 26px;
+      height: 26px;
+      transform: translate(-100px, -100px);
+      border: 1px solid rgba(120, 255, 157, .65);
+      background: rgba(75, 200, 111, .045);
+      clip-path: polygon(0 0, 34% 0, 34% 5%, 66% 5%, 66% 0, 100% 0, 100% 34%, 95% 34%, 95% 66%, 100% 66%, 100% 100%, 66% 100%, 66% 95%, 34% 95%, 34% 100%, 0 100%, 0 66%, 5% 66%, 5% 34%, 0 34%);
+      pointer-events: none;
+      opacity: 0;
+      transition: width .15s, height .15s, opacity .15s;
+    }
+    .cursor-reticle[data-active="true"] { width: 37px; height: 37px; }
+    .cursor-reticle[data-visible="true"] { opacity: 1; }
+    .cursor-reticle span { position: absolute; inset: 11px; background: #8cffae; }
+  }
+</style>
+
+<script>
+  const reticle = document.querySelector<HTMLElement>('.cursor-reticle');
+  const enabled = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+
+  if (reticle) {
+    let frame = 0;
+    let mx = -100;
+    let my = -100;
+    const paint = () => {
+      reticle.style.transform = `translate3d(${mx - reticle.offsetWidth / 2}px, ${my - reticle.offsetHeight / 2}px, 0)`;
+      frame = 0;
+    };
+    const hide = () => { reticle.dataset.visible = 'false'; };
+    window.addEventListener('pointermove', (event) => {
+      if (!enabled.matches) return hide();
+      mx = event.clientX;
+      my = event.clientY;
+      const target = event.target;
+      const interactive = target instanceof Element && !!target.closest('a, button, input, textarea, select, summary');
+      reticle.dataset.active = String(interactive);
+      reticle.dataset.visible = 'true';
+      if (!frame) frame = requestAnimationFrame(paint);
+    }, { passive: true });
+    document.addEventListener('pointerleave', hide);
+    window.addEventListener('blur', hide);
+    enabled.addEventListener('change', hide);
+  }
+</script>

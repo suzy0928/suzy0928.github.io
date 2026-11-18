@@ -1,0 +1,141 @@
+@import "augmented-ui/augmented-ui.min.css";
+
+@font-face {
+  font-family: "Departure Mono";
+  src: url("/fonts/DepartureMono-Regular.otf")
+       format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* 기본 영문 폰트 */
+:root {
+  --font-display: "Departure Mono", monospace;
+  --font-korean: "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+
+body {
+  font-family: var(--font-display);
+}
+
+/* 한국어 콘텐츠 */
+:lang(ko) {
+  font-family: var(--font-korean);
+}
+
+
+:root {
+  --bg: #080f16;
+  --panel: #101d27;
+  --text: #d6e9e5;
+  --accent: #70e4d0;
+  --muted: #87a2ad;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Departure Mono", monospace;
+}
+
+/* 은은하게 움직이는 배경 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      #1b686244,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      #244e7040,
+      transparent 50%
+    );
+
+  animation: background-drift 12s
+    ease-in-out infinite alternate;
+}
+
+/* CRT 가로줄 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.16) 3px,
+    rgba(0, 0, 0, 0.16) 4px
+  );
+}
+
+@keyframes background-drift {
+  from {
+    transform: translate(-3%, -2%);
+  }
+  to {
+    transform: translate(3%, 2%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
+/* CRT 화면을 가로질러 움직이는 빛 */
+.crt-sweep {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -40vh;
+  height: 30vh;
+  z-index: 99;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(112, 228, 208, 0.025) 45%,
+    rgba(112, 228, 208, 0.09) 75%,
+    transparent
+  );
+
+  animation: crt-rolling 7s linear infinite;
+}
+
+@keyframes crt-rolling {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(140vh);
+  }
+}
+
+/* 움직임 감소 환경설정 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .crt-sweep {
+    animation: none;
+    display: none;
+  }
+}

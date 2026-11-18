@@ -1,11 +1,73 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TunnelParallax from '../components/effects/TunnelParallax.astro';
+import CustomCursor from '../components/effects/CustomCursor.astro';
+import ResearchWindow from '../components/ui/ResearchWindow.astro';
+import '../styles/home.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Su-ji Park | Cybersecurity Research">
+  <main class="home" id="top">
+    <header class="console-top">
+      <a href="/" aria-label="Su-ji Park, home">SYS://SUJI_RESEARCH</a>
+      <span><span class="status-dot" aria-hidden="true"></span> SYSTEM ONLINE</span>
+    </header>
+
+    <section class="hero-grid" aria-labelledby="hero-title">
+      <div>
+        <p class="kicker">[ IDENTITY VERIFIED / RESEARCH ARCHIVE ]</p>
+        <h1 class="hero-title" id="hero-title">SUZY PARK<span>_</span></h1>
+        <p class="hero-subtitle">CYBERSECURITY × TRUSTWORTHY AI</p>
+        <p class="hero-description">
+          M.S. student in Convergence Security Engineering at Sungshin Women's University.
+          Research interests include AI-driven threat detection and resilient defense systems.
+        </p>
+        <nav class="nav-list" aria-label="Main navigation">
+          <a href="/publications/">01 / PUBLICATIONS ↗</a>
+          <a href="#research">02 / RESEARCH ↓</a>
+          <a href="#about">03 / ABOUT ↓</a>
+          <a href="mailto:620266008@sungshin.ac.kr">04 / CONTACT ↗</a>
+        </nav>
+      </div>
+
+      <aside class="panels" aria-label="Research highlights">
+        <article class="console-panel" data-augmented-ui="border tl-clip br-clip">
+          <div class="panel-header"><span>RESEARCH_RECORD.EXE</span><span aria-hidden="true">▢ ×</span></div>
+          <p class="panel-label">LATEST JOURNAL PUBLICATION / 2026</p>
+          <h2 class="panel-title">GRIV</h2>
+          <p class="panel-copy">Gateway-Based Report Integrity Verification against Report Concealment Attacks in Distributed IoT IDS</p>
+          <button type="button" class="record-trigger panel-link" data-open-research aria-haspopup="dialog" aria-controls="research-dialog">[ OPEN RESEARCH RECORD ] ↗</button>
+        </article>
+        <article class="console-panel" data-augmented-ui="border tl-clip br-clip">
+          <div class="panel-header"><span>MONITOR://RESEARCH</span><span>01 / 02</span></div>
+          <p class="panel-label">RESEARCH FOCUS</p>
+          <svg class="signal" viewBox="0 0 280 46" role="img" aria-label="Decorative simulated signal line, not research data">
+            <path class="gridline" d="M0 10H280 M0 23H280 M0 36H280" />
+            <polyline points="0,31 18,29 36,33 45,17 56,36 75,25 90,27 106,12 118,32 142,21 155,26 178,9 193,34 215,26 230,31 246,16 263,29 280,25" />
+          </svg>
+          <p class="panel-copy">Trustworthy AI / Cybersecurity / Intelligent Threat Detection</p>
+          <p class="panel-label">SIMULATED SIGNAL — DECORATIVE</p>
+        </article>
+      </aside>
+    </section>
+
+    <section class="info-section" id="research" aria-labelledby="research-title">
+      <h2 id="research-title">01 / RESEARCH</h2>
+      <p>Trustworthy AI (security and reliability in intelligent systems) and cybersecurity (AI-driven threat detection and resilient defense systems).</p>
+      <p><a href="/publications/">Explore peer-reviewed publications ↗</a></p>
+    </section>
+
+    <section class="info-section" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">02 / ABOUT</h2>
+      <p>M.S. in Convergence Security Engineering, Sungshin Women's University (Mar. 2026–present). B.S. in AI Convergence (Feb. 2026).</p>
+      <p>Research experience: CSE Lab, Sungshin Women's University (Mar. 2025–Feb. 2026).</p>
+      <p>Contact: <a href="mailto:620266008@sungshin.ac.kr">620266008@sungshin.ac.kr</a></p>
+    </section>
+
+    <footer class="footer-line">© 2026 SU-JI PARK · RESEARCH ARCHIVE</footer>
+  </main>
+
+  <ResearchWindow />
+  <TunnelParallax />
+  <CustomCursor />
+</BaseLayout>

@@ -1,0 +1,26 @@
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #70e4d0;
+  box-shadow: 0 0 12px rgba(112, 228, 208, 0.55);
+}
+
+.cursor-ring {
+  width: 24px;
+  height: 24px;
+  margin-left: -9px;
+  margin-top: -9px;
+  border: 1px solid rgba(112, 228, 208, 0.45);
+  border-radius: 50%;
+}
