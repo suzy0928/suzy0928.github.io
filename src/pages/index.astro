@@ -4,6 +4,10 @@ import TunnelParallax from '../components/effects/TunnelParallax.astro';
 import CustomCursor from '../components/effects/CustomCursor.astro';
 import ResearchWindow from '../components/ui/ResearchWindow.astro';
 import '../styles/home.css';
+import '../styles/console-extension.css';
+import AccessGate from '../components/ui/AccessGate.astro';
+import ArchiveWindow from '../components/ui/ArchiveWindow.astro';
+import TerminalConsole from '../components/ui/TerminalConsole.astro';
 ---
 
 <BaseLayout title="Su-ji Park | Cybersecurity Research">
@@ -51,6 +55,13 @@ import '../styles/home.css';
       </aside>
     </section>
 
+    <div class="archive-launcher" aria-label="Open research archive preview">
+      <p class="archive-launcher-label">[ FILE EXPLORER / OPEN RECORD ]</p>
+      <button type="button" data-open-archive="research" aria-haspopup="dialog">RESEARCH.EXE </button>
+      <button type="button" data-open-archive="papers" aria-haspopup="dialog">PUBLICATIONS.EXE </button>
+      <button type="button" data-open-archive="cv" aria-haspopup="dialog">CV.EXE </button>
+    </div>
+    <TerminalConsole />
     <section class="info-section" id="research" aria-labelledby="research-title">
       <h2 id="research-title">01 / RESEARCH</h2>
       <p>Trustworthy AI (security and reliability in intelligent systems) and cybersecurity (AI-driven threat detection and resilient defense systems).</p>
@@ -68,6 +79,8 @@ import '../styles/home.css';
   </main>
 
   <ResearchWindow />
+  <ArchiveWindow />
+  <AccessGate />
   <TunnelParallax />
   <CustomCursor />
 </BaseLayout>

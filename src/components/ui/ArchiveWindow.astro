@@ -1,0 +1,76 @@
+<dialog id="archive-window" class="archive-window" aria-labelledby="archive-title">
+  <div class="archive-frame" data-augmented-ui="border tl-clip br-clip">
+    <div class="archive-titlebar"><span>ARCHIVE_EXPLORER.EXE</span><form method="dialog"><button type="submit" aria-label="Close archive window">×</button></form></div>
+    <div class="archive-body">
+      <p class="archive-meta">[ PUBLIC RESEARCH RECORD / READ ONLY ]</p>
+      <h2 id="archive-title">ARCHIVE</h2>
+      <div class="archive-tabs" role="group" aria-label="Choose an archive category">
+        <button type="button" data-archive-tab="research">RESEARCH</button>
+        <button type="button" data-archive-tab="papers">PUBLICATIONS</button>
+        <button type="button" data-archive-tab="cv">CV</button>
+      </div>
+      <div class="archive-pages">
+        <section data-archive-page="research" aria-label="Research summary">
+          <h3>RESEARCH</h3><p>Trustworthy AI · Cybersecurity · AI-driven threat detection · Resilient defense systems</p>
+          <p>Current research and funded project information.</p><a href="/research/">OPEN FULL RESEARCH PAGE ↗</a>
+        </section>
+        <section data-archive-page="papers" aria-label="Publication summary" hidden>
+          <h3>LATEST PUBLICATION / GRIV</h3><p>Gateway-Based Report Integrity Verification against Report Concealment Attacks in Distributed IoT IDS</p>
+          <p><em>Computers, Materials &amp; Continua</em>, 2026</p>
+          <a href="https://doi.org/10.32604/cmc.2026.092071" target="_blank" rel="noopener noreferrer">OPEN DOI ↗</a>
+          <a href="/publications/">ALL PUBLICATIONS ↗</a>
+        </section>
+        <section data-archive-page="cv" aria-label="Curriculum vitae summary" hidden>
+          <h3>CURRICULUM VITAE</h3><p>M.S. in Convergence Security Engineering · Sungshin Women's University</p>
+          <p>Education, awards, research experience and professional activities.</p><a href="/cv/">OPEN FULL CV ↗</a>
+        </section>
+      </div>
+      <p class="archive-footer">ACCESS LEVEL: PUBLIC · CLICK A TAB TO SWITCH RECORDS</p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+.archive-window{width:min(93vw,680px);max-height:90dvh;overflow:auto;border:0;background:transparent;padding:0;color:#e7f9ea}
+.archive-window::backdrop{background:#000b;backdrop-filter:blur(4px)}
+.archive-frame{--aug-border-all:1px;--aug-border-bg:#72e995;--aug-tl:18px;--aug-br:18px;background:#09180fee}
+.archive-titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid #3c6847;font-size:11px;color:#a0ffc0}
+.archive-titlebar form{margin:0}.archive-titlebar button{width:34px;height:34px;background:#10251a;color:#f0fff1;border:1px solid #4b845e;font-size:20px;cursor:pointer}
+.archive-body{padding:clamp(18px,4vw,32px)}.archive-meta,.archive-footer{color:#87cc9b;font-size:11px;line-height:1.7}
+#archive-title{font-size:clamp(27px,5vw,42px);margin:10px 0 18px}
+.archive-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}.archive-tabs button{background:#10251a;border:1px solid #41654d;color:#cdeed6;padding:10px 12px;font:inherit;font-size:11px;cursor:pointer}
+.archive-tabs button[aria-pressed="true"]{background:#256139;border-color:#9cffb5;color:#fff}
+.archive-pages section{min-height:145px}.archive-pages h3{color:#a9ffc3;font-size:17px}.archive-pages p{color:#c0d4c3;line-height:1.75;font-size:13px}
+.archive-pages a{display:inline-block;margin:8px 16px 0 0;color:#9effb7;text-underline-offset:4px;font-size:12px}
+.archive-footer{border-top:1px solid #3c6847;padding-top:18px;margin-top:30px}
+.archive-window button:focus-visible,.archive-window a:focus-visible{outline:2px solid #d3ffe1;outline-offset:3px}
+</style>
+
+<script>
+  type ArchiveSection = 'research' | 'papers' | 'cv';
+  const dialog = document.querySelector<HTMLDialogElement>('#archive-window');
+  const title = document.querySelector<HTMLElement>('#archive-title');
+  const names: Record<ArchiveSection, string> = {research:'RESEARCH',papers:'PUBLICATIONS',cv:'CURRICULUM VITAE'};
+  function showSection(section: ArchiveSection) {
+    if (!dialog || !title) return;
+    title.textContent = names[section];
+    dialog.querySelectorAll<HTMLElement>('[data-archive-page]').forEach(p => {p.hidden = p.dataset.archivePage !== section;});
+    dialog.querySelectorAll<HTMLButtonElement>('[data-archive-tab]').forEach(b => {b.setAttribute('aria-pressed', String(b.dataset.archiveTab === section));});
+    if (!dialog.open) dialog.showModal();
+  }
+  if (dialog) {
+    dialog.querySelectorAll<HTMLButtonElement>('[data-archive-tab]').forEach(button=>{
+      button.addEventListener('click',()=>showSection(button.dataset.archiveTab as ArchiveSection));
+    });
+    document.addEventListener('click', event=>{
+      const trigger = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-open-archive]') : null;
+      const section = trigger?.dataset.openArchive;
+      if(section && section in names) showSection(section as ArchiveSection);
+    });
+    document.addEventListener('console:open-archive',event=>{
+      const section = (event as CustomEvent<{section:string}>).detail?.section;
+      if(section && section in names) showSection(section as ArchiveSection);
+    });
+    dialog.addEventListener('click',event=>{if(event.target===dialog) dialog.close();});
+  }
+</script>

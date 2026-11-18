@@ -1,0 +1,8 @@
+/* Extra controls only; all established home/CRT/wireframe styles remain unchanged. */
+.archive-launcher { margin: 4px 0 26px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.archive-launcher-label { color: #9dffb2; font-size: 11px; letter-spacing: .1em; margin: 0 14px 0 0; }
+.archive-launcher button { padding: 12px 15px; background: #0b1c12de; border: 1px solid #50815b; color: #dcf7e1; font: inherit; font-size: 11px; cursor: pointer; transition: border-color .18s, background .18s; }
+.archive-launcher button:hover { background: #225231; border-color: #b1ffc4; }
+.archive-launcher button:focus-visible { outline: 2px solid #c4ffd3; outline-offset: 3px; }
+@media (max-width: 600px) { .archive-launcher { display: grid; grid-template-columns: 1fr; } .archive-launcher-label { margin-bottom: 4px; } .archive-launcher button { text-align: left; } }
+@media (prefers-reduced-motion: reduce) { .archive-launcher button { transition: none; } }

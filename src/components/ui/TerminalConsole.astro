@@ -1,0 +1,143 @@
+<section id="console-terminal" class="terminal" aria-labelledby="terminal-heading" data-augmented-ui="border tl-clip br-clip">
+  <div class="terminal-header">
+    <span id="terminal-heading">TERMINAL.EXE <span aria-hidden="true">//</span> COMMAND INTERFACE</span>
+    <span class="terminal-status" id="terminal-status">● MONITORING</span>
+  </div>
+  <div class="terminal-body">
+    <p class="terminal-welcome">SUJI RESEARCH CONSOLE v1.0 · All data here is public.</p>
+    <div class="terminal-output" id="terminal-output" role="log" aria-label="Terminal command output" aria-live="off">
+      <p>Session initialized. Type <strong>--help</strong> to list commands.</p>
+    </div>
+    <form id="terminal-form" autocomplete="off" role="search" aria-label="Terminal commands">
+      <label for="terminal-input" class="terminal-prompt">guest@archive:~$</label>
+      <div class="terminal-input-wrap">
+        <input id="terminal-input" type="text" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" aria-describedby="terminal-hint" maxlength="120" placeholder="--help" />
+      </div>
+      <button type="submit" class="terminal-run">RUN ↵</button>
+    </form>
+    <p id="terminal-hint" class="terminal-hint">SUGGESTED: <button type="button" id="terminal-suggest">--help</button> <span class="terminal-caret" aria-hidden="true">▌</span> <span>Press TAB to autocomplete · ENTER to run</span></p>
+    <p id="terminal-announcement" class="sr-only" aria-live="polite"></p>
+  </div>
+</section>
+
+<style>
+.terminal{--aug-border-all:1px;--aug-border-bg:#4f8c60;--aug-tl:16px;--aug-br:16px;background:rgba(4,14,9,.93);margin:34px 0 54px;color:#d6f7db;min-width:0}
+.terminal-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid #355d42;padding:14px 20px;color:#94ffb4;font-size:11px;letter-spacing:.08em}
+.terminal-header span span{color:#658e6e}.terminal-status{color:#9afcb1}.terminal[data-alert="true"]{--aug-border-bg:#ff555e;border-color:#ff555e;box-shadow:0 0 30px #b9001630;animation:terminal-alarm .16s steps(2) 6}
+.terminal[data-alert="true"] .terminal-status{color:#ff7078}
+.terminal-body{padding:clamp(16px,3vw,25px)}.terminal-welcome{color:#89ba93;font-size:12px;line-height:1.65}
+.terminal-output{max-height:240px;overflow:auto;padding:12px 0;color:#c6e9d0;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.terminal-output p{margin:0 0 7px;white-space:pre-wrap}.terminal-output .terminal-command{color:#9effb1}.terminal-output .terminal-warning{color:#ff8f96}.terminal-output .terminal-info{color:#aacbb0}
+#terminal-form{display:flex;align-items:center;gap:10px;min-width:0;padding:11px 0;border-top:1px solid #355d42}
+.terminal-prompt{color:#9cffb3;font-size:12px;white-space:nowrap}
+.terminal-input-wrap{flex:1;min-width:0}
+#terminal-input{display:block;width:100%;border:0;outline:0;background:transparent;color:#eefdf0;font-family:inherit;font-size:13px;caret-color:#9dffb4}
+#terminal-input::placeholder{color:#7ea68a;opacity:.7}
+.terminal-run{padding:9px 12px;border:1px solid #4d8560;background:#152f1d;color:#baffc9;font:inherit;font-size:11px;cursor:pointer}
+#terminal-form:focus-within{border-top-color:#a1ffc0}.terminal-run:focus-visible,.terminal-hint button:focus-visible{outline:2px solid #deffe4;outline-offset:3px}
+.terminal-hint{display:flex;align-items:center;flex-wrap:wrap;gap:6px;color:#87a88f;font-size:11px;line-height:1.7}
+.terminal-hint button{background:none;border:0;padding:0;color:#a4ffbf;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.terminal-caret{color:#a0ffb3;animation:terminal-blink .95s steps(2) infinite}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes terminal-blink{50%{opacity:0}}
+@keyframes terminal-alarm{50%{filter:brightness(1.8)}}
+@media(max-width:600px){#terminal-form{flex-wrap:wrap;gap:8px}.terminal-prompt{font-size:11px}.terminal-run{flex-shrink:0}.terminal-output{max-height:200px}.terminal-header{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.terminal-caret,.terminal[data-alert="true"]{animation:none}}
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#terminal-form');
+  const input = document.querySelector<HTMLInputElement>('#terminal-input');
+  const output = document.querySelector<HTMLElement>('#terminal-output');
+  const terminal = document.querySelector<HTMLElement>('#console-terminal');
+  const status = document.querySelector<HTMLElement>('#terminal-status');
+  const announcer = document.querySelector<HTMLElement>('#terminal-announcement');
+  const suggest = document.querySelector<HTMLButtonElement>('#terminal-suggest');
+  const supported = ['--help','help','whoami','papers','research','cv','clear','sudo'];
+  let history: string[] = [];
+  let historyCursor = 0;
+  let alertTimer = 0;
+
+  function addLine(text: string, kind: 'command'|'warning'|'info' = 'info') {
+    if (!output) return;
+    const line = document.createElement('p');
+    line.className = 'terminal-' + kind;
+    line.textContent = text;
+    output.appendChild(line);
+    while (output.childElementCount > 35) output.firstElementChild?.remove();
+    output.scrollTop = output.scrollHeight;
+    if (announcer && kind !== 'command') announcer.textContent = text;
+  }
+  function alertSecurity() {
+    if (!terminal || !status) return;
+    terminal.dataset.alert = 'true';
+    status.textContent = '● ANOMALY DETECTED';
+    window.clearTimeout(alertTimer);
+    alertTimer = window.setTimeout(() => {
+      terminal.dataset.alert = 'false';
+      status.textContent = '● MONITORING';
+    }, 2400);
+  }
+  function run(value: string) {
+    const raw = value.trim();
+    if (!raw) return;
+    addLine('guest@archive:~$ ' + raw,'command');
+    const command = raw.toLowerCase().replace(/\s+/g,' ');
+    if (command === '--help' || command === 'help') {
+      addLine('AVAILABLE COMMANDS:');
+      addLine('--help       list supported commands');
+      addLine('whoami       identify the researcher');
+      addLine('papers       open the publications archive');
+      addLine('research     open the research archive');
+      addLine('cv           open the curriculum vitae');
+      addLine('clear        clear terminal output');
+      addLine('sudo         request suspiciously excessive privileges');
+      addLine('P.S. An unrecognized prompt may trigger a security response. Curious? Try it. ;)');
+    } else if (command === 'whoami') {
+      addLine('Su-ji Park · M.S. student · Cybersecurity × Trustworthy AI');
+    } else if (command === 'papers' || command === 'research' || command === 'cv') {
+      addLine('OPENING ARCHIVE: ' + command.toUpperCase());
+      document.dispatchEvent(new CustomEvent('console:open-archive',{detail:{section:command}}));
+    } else if (command === 'clear') {
+      if (output) output.replaceChildren();
+      if (announcer) announcer.textContent = 'Terminal cleared';
+    } else if (command === 'sudo' || command.startsWith('sudo ') || command.startsWith('rm ') || command.startsWith('chmod ') || command.startsWith('su ')) {
+      alertSecurity();
+      addLine('!! ANOMALY DETECTED !! Privilege escalation request intercepted.','warning');
+      addLine('Nice try. This is a portfolio, not a production server. ;)','warning');
+      addLine('No commands were executed. Your curiosity remains on the record. (Kidding.)','warning');
+    } else {
+      alertSecurity();
+      addLine('UNRECOGNIZED PROMPT // ACCESS NOT GRANTED','warning');
+      addLine('Anomaly detected. The archive is watching... metaphorically. ;)','warning');
+      addLine('Type --help for the approved commands.','info');
+    }
+  }
+  if (form && input) {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const value = input.value;
+      if (value.trim()) {
+        history.push(value);
+        history = history.slice(-30);
+        historyCursor = history.length;
+        run(value);
+      }
+      input.value = '';
+    });
+    input.addEventListener('keydown', event => {
+      if (event.key === 'Tab' && !event.shiftKey) {
+        const value = input.value.trim().toLowerCase();
+        const candidate = value === '' ? '--help' : supported.find(s => s.startsWith(value));
+        if (candidate) { event.preventDefault(); input.value = candidate; }
+      }
+      if (event.key === 'ArrowUp' && historyCursor > 0) {
+        event.preventDefault();historyCursor--;input.value = history[historyCursor] ?? '';
+      }
+      if (event.key === 'ArrowDown' && historyCursor < history.length) {
+        event.preventDefault();historyCursor++;input.value = history[historyCursor] ?? '';
+      }
+    });
+  }
+  suggest?.addEventListener('click',()=>{if(input){input.value='--help';input.focus();}});
+</script>
