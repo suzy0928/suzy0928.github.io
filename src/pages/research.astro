@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import InnerPageHeader from '../components/layout/InnerPageHeader.astro';
+import { researchInterests, researchProjects } from '../data/portfolio';
+---
+<BaseLayout title="Research | Su-ji Park">
+  <main class="page">
+    <InnerPageHeader current="research" />
+    <div class="intro">
+      <p class="eyebrow">ARCHIVE / 003</p>
+      <h1>RESEARCH<span>_</span></h1>
+      <p>Research interests and selected funded R&amp;D programs.</p>
+    </div>
+    <section aria-labelledby="interests-title">
+      <h2 id="interests-title">01 / RESEARCH INTERESTS</h2>
+      <div class="cards">
+        {researchInterests.map((item) => (
+          <article class="panel" data-augmented-ui="tl-clip br-clip border">
+            <h3>{item.title}</h3><p>{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section aria-labelledby="rd-title">
+      <h2 id="rd-title">02 / FUNDED R&amp;D PROGRAMS</h2>
+      <p class="clarification">The following entries describe programs associated with my research activities, not claims of sole project ownership.</p>
+      <div class="records">
+        {researchProjects.map((item, i) => (
+          <article class="record">
+            <div class="record-meta"><span>PROJECT {String(i+1).padStart(2,'0')}</span><span>{item.period}</span></div>
+            <h3>{item.name}</h3>
+            {item.description && <p>{item.description}</p>}
+            <p class="korean" lang="ko">{item.korean}</p>
+            <p class="agency">{item.agency}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+    <footer class="page-footer"><a href="/cv/">VIEW CURRICULUM VITAE →</a><a href="/">RETURN HOME ↑</a></footer>
+  </main>
+</BaseLayout>
+<style>
+  .page{position:relative;max-width:1080px;margin:auto;padding:0 clamp(18px,4vw,44px) 96px;color:#d8e9da}
+  .intro{margin:clamp(60px,10vw,112px) 0 76px}.eyebrow,section h2{color:#8cf4a3;letter-spacing:.12em;font-size:.84rem}
+  h1{font-size:clamp(3rem,9vw,6.5rem);line-height:1.08;margin:18px 0;overflow-wrap:anywhere}h1 span{color:#8cf4a3}.intro>p:last-child{color:#a4bdab;line-height:1.7}
+  section{margin:64px 0}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+  .panel{--aug-border-all:1px;--aug-border-bg:#528d61;--aug-tl:18px;--aug-br:18px;padding:25px;background:rgba(5,19,12,.88)}
+  h3{font-size:1.15rem;line-height:1.6;margin:0 0 12px}.panel p,.record p{line-height:1.8;color:#b8cabb;margin:0}
+  .clarification{max-width:720px;color:#a4bdab;line-height:1.7;font-size:.9rem}
+  .records{display:grid;gap:18px;margin-top:28px}.record{padding:clamp(20px,3vw,30px);border:1px solid #36573f;background:rgba(5,19,12,.9)}
+  .record-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:#8cf4a3;font-size:.78rem;letter-spacing:.06em;margin-bottom:15px}
+  .record .korean{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:#a2b9a7;margin-top:14px;line-height:1.7}.record .agency{color:#8cf4a3;font-size:.83rem;margin-top:16px}
+  .page-footer{border-top:1px solid #36573f;padding-top:22px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.page-footer a{color:#8cf4a3;text-decoration:none;font-size:.83rem}
+  a:focus-visible{outline:2px solid #b7ffbf;outline-offset:5px}
+  @media(max-width:700px){.cards{grid-template-columns:1fr}.intro{margin:55px 0}.record-meta{font-size:.73rem}}
+</style>

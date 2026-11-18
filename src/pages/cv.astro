@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import InnerPageHeader from '../components/layout/InnerPageHeader.astro';
+import { education, experiences, honors, activities, internationalPrograms } from '../data/portfolio';
+const groups = [
+  { label:'EDUCATION', items:education },
+  { label:'RESEARCH & TEACHING EXPERIENCE', items:experiences },
+  { label:'HONORS & AWARDS', items:honors },
+  { label:'PROFESSIONAL ACTIVITIES', items:activities },
+  { label:'INTERNATIONAL PROGRAMS', items:internationalPrograms },
+];
+---
+<BaseLayout title="CV | Su-ji Park">
+  <main class="page">
+    <InnerPageHeader current="cv" />
+    <div class="intro">
+      <p class="eyebrow">ARCHIVE / 004</p>
+      <h1>CURRICULUM VITAE<span>_</span></h1>
+      <p>Su-ji Park · M.S. Student, Convergence Security Engineering</p>
+      <a class="contact" href="mailto:620266008@sungshin.ac.kr">620266008@sungshin.ac.kr ↗</a>
+    </div>
+    {groups.map((group, i) => (
+      <section aria-labelledby={`cv-heading-${i}`}>
+        <h2 id={`cv-heading-${i}`}>{String(i + 1).padStart(2, '0')} / {group.label}</h2>
+        <div class="entries">
+          {group.items.map((item) => (
+            <article class="entry">
+              <p class="date">{item.period}</p>
+              <div>
+                <h3>{item.title}</h3>
+                {'institution' in item && item.institution && <p>{item.institution}</p>}
+                {'detail' in item && item.detail && <p>{item.detail}</p>}
+                {'url' in item && item.url && <a href={item.url} target="_blank" rel="noopener noreferrer">VIEW SOURCE ↗</a>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+    <footer class="page-footer"><a href="/research/">VIEW RESEARCH →</a><a href="/">RETURN HOME ↑</a></footer>
+  </main>
+</BaseLayout>
+<style>
+ .page{position:relative;max-width:1080px;margin:0 auto;padding:0 clamp(18px,4vw,44px) 96px;color:#d8e9da}
+ .intro{margin:clamp(55px,10vw,110px) 0 74px}.eyebrow,h2{color:#8cf4a3;font-size:.84rem;letter-spacing:.12em}
+ h1{font-size:clamp(2.5rem,7vw,5.4rem);overflow-wrap:anywhere;line-height:1.12;margin:18px 0}h1 span{color:#8cf4a3}.intro p:not(.eyebrow){line-height:1.7;color:#aec5b3}
+ .contact{display:inline-block;margin-top:13px}a{color:#8cf4a3;text-underline-offset:4px}a:focus-visible{outline:2px solid #b7ffbf;outline-offset:5px}
+ section{margin:62px 0}.entries{border-top:1px solid #36573f;margin-top:24px}
+ .entry{display:grid;grid-template-columns:minmax(150px,25%) minmax(0,1fr);gap:22px;padding:24px 4px;border-bottom:1px solid #2d4a36;background:rgba(4,14,9,.38)}
+ .date{color:#8cf4a3;font-size:.85rem;margin:4px 0}.entry h3{font-size:1.08rem;margin:0 0 8px;line-height:1.55}.entry div p{margin:6px 0;color:#b2c8b7;line-height:1.75}.entry div a{font-size:.78rem;display:inline-block;margin-top:9px}
+ .page-footer{border-top:1px solid #36573f;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}.page-footer a{text-decoration:none;font-size:.83rem}
+ @media(max-width:640px){.entry{grid-template-columns:1fr;gap:4px}.intro{margin:55px 0}}
+</style>

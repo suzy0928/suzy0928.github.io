@@ -1,0 +1,27 @@
+---
+interface Props { current: 'research' | 'cv' | 'publications'; }
+const { current } = Astro.props;
+const navigation = [
+  { href: '/', label: 'HOME', key: 'home' },
+  { href: '/publications/', label: 'PUBLICATIONS', key: 'publications' },
+  { href: '/research/', label: 'RESEARCH', key: 'research' },
+  { href: '/cv/', label: 'CV', key: 'cv' },
+];
+---
+<header class="inner-header">
+  <a href="/" class="brand">SYS://SUZY_RESEARCH</a>
+  <nav aria-label="Main navigation">
+    {navigation.map(({ href, label, key }) => (
+      <a href={href} aria-current={current === key ? 'page' : undefined}>{label}</a>
+    ))}
+  </nav>
+</header>
+<style>
+  .inner-header { display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;padding:1.25rem 0;border-bottom:1px solid #356146; }
+  .brand {font-size:.78rem;letter-spacing:.08em;white-space:nowrap;color:#8df8a6;text-decoration:none}
+  nav {display:flex;gap:clamp(.65rem,2vw,1.4rem);flex-wrap:wrap}
+  nav a {font-size:.75rem;color:#d4e6d7;text-decoration:none;padding:.5rem .15rem;text-underline-offset:.35em}
+  nav a:hover,nav a:focus-visible,nav a[aria-current="page"]{color:#8df8a6;text-decoration:underline}
+  :is(a):focus-visible{outline:2px solid #a3ffb1;outline-offset:5px}
+  @media (max-width:600px) { .inner-header{align-items:flex-start} nav{width:100%;justify-content:space-between;gap:.45rem} nav a{font-size:.7rem} }
+</style>
