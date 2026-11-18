@@ -84,6 +84,11 @@
   @keyframes gate-blink{50%{opacity:0}}
   @media(max-width:560px){.gate-choices{grid-template-columns:1fr}.gate-bar{flex-wrap:wrap}}
   @media(prefers-reduced-motion:reduce){.gate-caret{animation:none}}
+
+  /* 한국어·영어 제목 줄바꿈 */
+#gate-title [data-copy="title"] {
+  white-space: pre-line;
+}
 </style>
 
 <script>
@@ -91,7 +96,7 @@
   const copy = {
     ko: {
       kicker: "[ 시스템 안내 ]",
-      title: "박수지 님의\n연구 포트폴리오",
+      title: "박수지 님의 연구 포트폴리오",
       desc: "영화 속 해킹 화면처럼 꾸며봤지만, CV와 참여 과제, 출판 논문들을 모아둔 평범한 연구 아카이브입니다.",
       note: "그냥 단정하고 익숙한 형태의 공식 프로필 페이지가 필요하신가요? 물론 준비되어 있습니다.",
       official: "[ 평범하고 얌전한 기존 사이트 ]",
