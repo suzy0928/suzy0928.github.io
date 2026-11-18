@@ -1,25 +1,51 @@
-<dialog id="access-gate" class="access-gate" aria-labelledby="gate-title" aria-describedby="gate-desc">
+<dialog
+  id="access-gate"
+  class="access-gate"
+  lang="ko"
+  aria-labelledby="gate-title"
+  aria-describedby="gate-desc"
+>
   <section class="gate-frame" data-augmented-ui="border tl-clip br-clip">
-    <div class="gate-bar"><span>ACCESS_PROTOCOL // PUBLIC DEMO</span><span aria-hidden="true">[ ? ]</span></div>
-    <div class="gate-content">
-      <p class="gate-kicker">[ NOTICE / RESEARCH ARCHIVE ]</p>
-      <h2 id="gate-title">REQUESTING ACCESS<span class="gate-caret">_</span></h2>
-      <p id="gate-desc">You have reached the experimental interface of Su-ji Park's research archive. The classified aesthetic is intentional. The information is not classified.</p>
-      <p class="gate-note">Prefer a conventional, no-surprises academic profile? The official-looking version is one click away.</p>
-      <div class="gate-choices">
-        <a class="gate-official" href="https://sites.google.com/sungshin.ac.kr/suji-park/%ED%99%88?authuser=0">[ OPEN CLASSIC PROFILE ] <span aria-hidden="true">↗</span></a>
-        <button class="gate-enter" id="gate-enter" type="button">[ ENTER RESEARCH CONSOLE ] <span aria-hidden="true">↵</span></button>
+    <div class="gate-bar">
+      <span>ACCESS_PROTOCOL // PUBLIC DEMO</span>
+      <div class="gate-lang" role="group" aria-label="팝업 언어 선택 / Popup language">
+        <button type="button" class="gate-lang-button" data-gate-lang="ko" aria-pressed="true">한국어</button>
+        <button type="button" class="gate-lang-button" data-gate-lang="en" aria-pressed="false">EN</button>
       </div>
-      <p class="gate-footnote">NO CLEARANCE REQUIRED · NO SECRET DATA · JUST A QUESTIONABLE AMOUNT OF GREEN PHOSPHOR.</p>
+    </div>
+
+    <div class="gate-content">
+      <p class="gate-kicker" data-copy="kicker">[ 시스템 안내 // 기밀 아님 ]</p>
+      <h2 id="gate-title">
+        <span data-copy="title">주의: 쓸데없이 비장한 연구 포트폴리오</span><span class="gate-caret" aria-hidden="true">_</span>
+      </h2>
+      <p id="gate-desc" data-copy="desc">박수지의 연구 포트폴리오입니다. 영화 속 해킹 화면처럼 꾸며봤지만, 실체는 CV와 참여 과제, 출판 논문들을 모아둔 평범한 연구 아카이브입니다.</p>
+      <p class="gate-note" data-copy="note">그냥 단정하고 익숙한 형태의 공식 프로필 페이지가 필요하신가요? 물론 준비되어 있습니다.</p>
+
+      <div class="gate-choices">
+        <a
+          class="gate-official"
+          href="https://sites.google.com/sungshin.ac.kr/suji-park/%ED%99%88?authuser=0"
+        >
+          <span data-copy="official">[ 평범하고 얌전한 기존 사이트 ]</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <button class="gate-enter" id="gate-enter" type="button">
+          <span data-copy="enter">[ 터미널 포트폴리오 입장하기 ]</span>
+          <span aria-hidden="true">↵</span>
+        </button>
+      </div>
+      <p class="gate-footnote" data-copy="footnote">보안 등급: 없음 · 국가 기밀: 없음 · 연구 실적만 가득함.</p>
     </div>
   </section>
 </dialog>
 
 <style>
+  /* Original gate UI preserved */
   .access-gate{width:min(92vw,690px);max-height:90dvh;overflow:auto;border:0;padding:0;background:transparent;color:#e6f9e8}
   .access-gate::backdrop{background:rgba(0,4,2,.82);backdrop-filter:blur(7px)}
   .gate-frame{--aug-border-all:1px;--aug-border-bg:#86f4a2;--aug-tl:20px;--aug-br:20px;background:#06110bef;box-shadow:0 0 50px #1ab54d1e}
-  .gate-bar{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #3b754e;padding:14px 19px;font-size:11px;letter-spacing:.09em;color:#9bffc0}
+  .gate-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #3b754e;padding:14px 19px;font-size:11px;letter-spacing:.09em;color:#9bffc0}
   .gate-content{padding:clamp(20px,5vw,40px)}
   .gate-kicker{color:#8afa9e;font-size:11px;letter-spacing:.1em}
   #gate-title{font-size:clamp(26px,5vw,46px);margin:12px 0 20px;line-height:1.2;overflow-wrap:anywhere}
@@ -32,24 +58,99 @@
   .gate-choices a:hover,.gate-choices button:hover{background:#28663a}
   .gate-choices a:focus-visible,.gate-choices button:focus-visible{outline:2px solid #d0ffe0;outline-offset:3px}
   .gate-footnote{font-size:10px;letter-spacing:.02em;line-height:1.7;color:#96aa99}
+
+  /* Only additions: language switch and Korean font */
+  @font-face{
+    font-family:"Pretendard";
+    src:url("/fonts/PretendardVariable.woff2") format("woff2");
+    font-style:normal;
+    font-weight:100 900;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"SUIT";
+    src:url("/fonts/SUIT-Regular.otf") format("opentype");
+    font-style:normal;
+    font-weight:400;
+    font-display:swap;
+  }
+  .access-gate:lang(ko){font-family:"Pretendard","SUIT","Malgun Gothic",sans-serif}
+  .access-gate:lang(en){font-family:"Departure Mono",monospace}
+  .access-gate:lang(en) #gate-title{font-size:clamp(24px,4.6vw,42px)}
+  .gate-lang{display:flex;flex-shrink:0;gap:4px;letter-spacing:normal}
+  .gate-lang-button{border:1px solid #43774d;padding:5px 9px;background:transparent;color:#a1c7aa;font:inherit;font-size:11px;cursor:pointer}
+  .gate-lang-button[aria-pressed="true"]{color:#06110b;background:#9bffc0;border-color:#9bffc0}
+  .gate-lang-button:focus-visible{outline:2px solid #d0ffe0;outline-offset:3px}
   @keyframes gate-blink{50%{opacity:0}}
-  @media(max-width:560px){.gate-choices{grid-template-columns:1fr}}
+  @media(max-width:560px){.gate-choices{grid-template-columns:1fr}.gate-bar{flex-wrap:wrap}}
   @media(prefers-reduced-motion:reduce){.gate-caret{animation:none}}
 </style>
 
 <script>
-  const gate = document.querySelector<HTMLDialogElement>('#access-gate');
-  const enter = document.querySelector<HTMLButtonElement>('#gate-enter');
-  const seenKey = 'suji-research-gate-seen-v1';
+  type Language = "ko" | "en";
+  const copy = {
+    ko: {
+      kicker: "[ 시스템 안내 // 기밀 아님 ]",
+      title: "주의: 쓸데없이 비장한 연구 포트폴리오",
+      desc: "박수지의 연구 포트폴리오입니다. 영화 속 해킹 화면처럼 꾸며봤지만, 실체는 CV와 참여 과제, 출판 논문들을 모아둔 평범한 연구 아카이브입니다.",
+      note: "그냥 단정하고 익숙한 형태의 공식 프로필 페이지가 필요하신가요? 물론 준비되어 있습니다.",
+      official: "[ 평범하고 얌전한 기존 사이트 ]",
+      enter: "[ 터미널 포트폴리오 입장하기 ]",
+      footnote: "보안 등급: 없음 · 국가 기밀: 없음 · 연구 실적만 가득함.",
+    },
+    en: {
+      kicker: "[ SYSTEM NOTICE // UNCLASSIFIED ]",
+      title: "WARNING: UNNECESSARILY DRAMATIC PORTFOLIO",
+      desc: "Welcome to Su-ji Park's research archive (terminal edition). It looks like a leaked intelligence console, though it actually just holds a CV, research projects, and publications.",
+      note: "Just need a normal, polite academic webpage for formal review? We have that too.",
+      official: "[ BORING NORMAL VERSION ]",
+      enter: "[ ENTER TERMINAL ARCHIVE ]",
+      footnote: "SECURITY LEVEL: ZERO · TOP SECRET: NONE · JUST RESEARCH DATA.",
+    },
+  } as const;
+
+  const gate = document.querySelector<HTMLDialogElement>("#access-gate");
+  const enter = document.querySelector<HTMLButtonElement>("#gate-enter");
+  const seenKey = "suji-research-gate-seen-v1";
+  const langKey = "suji-research-gate-language-v1";
+
   if (gate && enter) {
-    let alreadySeen = false;
-    try { alreadySeen = sessionStorage.getItem(seenKey) === 'yes'; } catch { /* storage unavailable */ }
-    if (!alreadySeen && !gate.open) gate.showModal();
-    gate.addEventListener('close', () => {
-      try { sessionStorage.setItem(seenKey, 'yes'); } catch { /* storage unavailable */ }
+    const fields = ["kicker", "title", "desc", "note", "official", "enter", "footnote"] as const;
+    const languageButtons = gate.querySelectorAll<HTMLButtonElement>("[data-gate-lang]");
+
+    const useLanguage = (language: Language) => {
+      gate.lang = language;
+      fields.forEach((field) => {
+        const element = gate.querySelector<HTMLElement>(`[data-copy="${field}"]`);
+        if (element) element.textContent = copy[language][field];
+      });
+      languageButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.gateLang === language));
+      });
+      try { localStorage.setItem(langKey, language); } catch { /* storage unavailable */ }
+    };
+
+    let savedLanguage: Language = "ko";
+    try { if (localStorage.getItem(langKey) === "en") savedLanguage = "en"; } catch { /* storage unavailable */ }
+    useLanguage(savedLanguage);
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.gateLang;
+        if (selected === "ko" || selected === "en") useLanguage(selected);
+      });
     });
-    enter.addEventListener('click', () => gate.close());
-    gate.addEventListener('click', (event) => { if (event.target === gate) gate.close(); });
+
+    let alreadySeen = false;
+    try { alreadySeen = sessionStorage.getItem(seenKey) === "yes"; } catch { /* storage unavailable */ }
+    if (!alreadySeen && !gate.open) gate.showModal();
+
+    const rememberVisit = () => {
+      try { sessionStorage.setItem(seenKey, "yes"); } catch { /* storage unavailable */ }
+    };
+    gate.addEventListener("close", rememberVisit);
+    enter.addEventListener("click", () => gate.close());
+    gate.querySelector<HTMLAnchorElement>(".gate-official")?.addEventListener("click", rememberVisit);
+    gate.addEventListener("click", (event) => { if (event.target === gate) gate.close(); });
   }
 </script>
-
