@@ -36,9 +36,9 @@ export const experiences = [
 ];
 
 export const honors = [
-  { period: '2026.07', title: 'Innovation Paper Award', detail: 'EBISION 2026 · 국제학술대회 혁신 논문상' },
-  { period: '2025.08', title: 'ICT Core Encouragement Award', detail: 'ICT Innovation Talent Achievement Exchange Event · ICT 장려상' },
-  { period: '2024.08', title: 'Grand Prize', detail: 'Global Field Trip Program · 글로벌 기업탐방 대상 (16팀 중 1위)' },
+  { period: '2026.07', title: 'Innovation Paper Award', detail: 'EBISION 2026 · 혁신 논문상', url: 'https://drive.google.com/file/d/1zSaUsAviRKAn3BCIS9AEIF1awGefE_qx/view?usp=sharing' },
+  { period: '2025.08', title: 'ICT Core Encouragement Award', detail: 'ICT Innovation Talent Achievement Exchange Event · ICT 장려상', url: 'https://drive.google.com/file/d/1wm3bI1-cK03F3AUhwNEs6S6D1fg4pTUD/view' },
+  { period: '2024.08', title: 'Grand Prize', detail: 'Global Field Trip Program · 글로벌 기업탐방 대상 (1st / 16 Teams)', url: 'https://youtu.be/wTQSnCpXdxk?si=5T9rnWjRwDv25iFG' },
 ];
 
 export const activities = [

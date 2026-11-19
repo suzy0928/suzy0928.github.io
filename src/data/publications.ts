@@ -41,6 +41,7 @@ export const publications: Publication[] = [
       "The 2nd IFIP WG 8.4 International Symposium on E-Business Information Systems Evolution (EBISION 2026)",
     details: "Seoul, South Korea, July 2026",
     award: "Innovation Paper Award",
+    url: "https://ebision.ifip-wg84.org/data/2026/ebision-papers/19_CIV_Content_Integrity_Verification_for_Distributed_Intrusion_Detection_Systems.pdf",
   },
   {
     id: "synchronization-ebision-2026",
@@ -53,6 +54,8 @@ export const publications: Publication[] = [
     venue:
       "The 2nd IFIP WG 8.4 International Symposium on E-Business Information Systems Evolution (EBISION 2026)",
     details: "Seoul, South Korea, July 2026",
+    url: "https://ebision.ifip-wg84.org/data/2026/ebision-papers/27_An_Energy_Efficient_Synchronization_Scheme_Using_Exponential_Moving_Average_Base.pdf",
+
   },
   {
     id: "p300-fgs-2026",
@@ -77,6 +80,7 @@ export const publications: Publication[] = [
     venue: "Proceedings of ASK 2026 (Annual Symposium of KIPS)",
     details:
       "vol. 33, no. 1, pp. 213–215, Gangneung, Republic of Korea, May 2026",
+    url: "https://koreascience.or.kr/article/CFKO202617672125522.page",
   },
   {
     id: "p300-wisa-2025",
@@ -89,6 +93,7 @@ export const publications: Publication[] = [
     venue:
       "The 24th World Conference on Information Security Applications (WISA)",
     details: "August 2025",
+    url: "https://www.manuscriptlink.com/society/kiisc/conference/wisa2025/accepted3#:~:text=Suji%20Park",
   },
   {
     id: "watermark-mobisec-2025",
@@ -107,5 +112,6 @@ export const publications: Publication[] = [
     venue:
       "The 9th International Conference on Mobile Internet Security (MobiSec)",
     details: "Sapporo, Japan, December 2025",
+    url: "https://easychair.org/smart-program/MobiSec2025/#:~:text=Su%2DJi%20Park",
   },
 ];
